@@ -37,16 +37,16 @@ const updateProduct = async (req, res) => {
     }
 }
 
-const getdetailProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
-        const userId = req.params.id
-        if (!userId) {
+        const productId = req.params.id
+        if (!productId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The UserID is required'
+                message: 'The ProductId is required'
             })
         }
-        const response = await UserService.getdetailUser(userId)
+        const response = await ProductService.deleteProduct(productId)
         return res.status(200).json(response)
     } catch (e) {
         return res.status(404).json({
@@ -55,28 +55,40 @@ const getdetailProduct = async (req, res) => {
     }
 }
 
-// const deleteUser = async (req, res) => {
-//     try {
-//         const userId = req.params.id
-//         if (!userId) {
-//             return res.status(200).json({
-//                 status: 'ERR',
-//                 message: 'The UserID is required'
-//             })
-//         }
-//         const response = await UserService.deleteUser(userId)
-//         return res.status(200).json(response)
-//     } catch (e) {
-//         return res.status(404).json({
-//             message: e
-//         })
-//     }
-// }
+const getallProduct = async (req, res) => {
+    try {
+        const { limit, page, sort, filter } = req.query
+        const response = await ProductService.getallProduct(Number(limit) || 8, Number(page) || 0, sort, filter)
+        return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
 
+const getdetailProduct = async (req, res) => {
+    try {
+        const productId = req.params.id
+        if (!productId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The productId is required'
+            })
+        }
+        const response = await ProductService.getdetailProduct(productId)
+        return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
 
 module.exports = {
     createProduct,
     updateProduct,
+    deleteProduct,
+    getallProduct,
     getdetailProduct
-
 }

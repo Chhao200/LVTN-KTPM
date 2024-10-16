@@ -6,7 +6,6 @@ const SignInPage = () => {
     return (
         <div className='register-page'>
             <div className='register-form-container'>
-                <h1 className='titile'>Đăng nhập</h1>
             </div>
 
             <form>

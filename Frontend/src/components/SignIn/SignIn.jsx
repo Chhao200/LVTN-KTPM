@@ -1,60 +1,98 @@
 import React from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Flex } from 'antd';
+import { Button, Checkbox, Form, Input, Row, Col } from 'antd';
 
-const SignIn = () => {
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-    };
-    return (
+const onFinish = (values) => {
+    console.log('Success:', values);
+};
+
+const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+};
+
+const App = () => (
+    <div
+        style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            backgroundColor: '#f0f2f5',
+        }}
+    >
         <Form
-            name="login"
+            name="basic"
+            style={{
+                maxWidth: 400,
+                width: '100%',
+                padding: '24px',
+                backgroundColor: '#fff',
+                borderRadius: '8px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                textAlign: 'center',
+            }}
             initialValues={{
                 remember: true,
             }}
-            style={{
-                maxWidth: 360,
-            }}
             onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
         >
+            <h2 style={{ marginBottom: '24px' }}>Đăng nhập</h2>
+
             <Form.Item
+                label="Username"
                 name="username"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your Username!',
+                        message: 'Please input your username!',
                     },
                 ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+                style={{ textAlign: 'left' }}
             >
-                <Input prefix={<UserOutlined />} placeholder="Username" />
+                <Input placeholder="Username" />
             </Form.Item>
+
             <Form.Item
+                label="Password"
                 name="password"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your Password!',
+                        message: 'Please input your password!',
                     },
                 ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+                style={{ textAlign: 'left' }}
             >
-                <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
-            </Form.Item>
-            <Form.Item>
-                <Flex justify="space-between" align="center">
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-                    <a href="">Forgot password</a>
-                </Flex>
+                <Input.Password placeholder="Password" />
             </Form.Item>
 
+            <Row justify="space-between" style={{ marginBottom: '16px' }}>
+                <Col>
+                    <Form.Item
+                        name="remember"
+                        valuePropName="checked"
+                        noStyle
+                    >
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+                </Col>
+                <Col>
+                    <a href="http://localhost:3000/dangky">Forgot Password</a>
+                </Col>
+            </Row>
+
             <Form.Item>
-                <Button block type="primary" htmlType="submit">
-                    Log in
+                <Button type="primary" htmlType="submit" block>
+                    Submit
                 </Button>
-                or <a href="">Register now!</a>
             </Form.Item>
         </Form>
-    );
-};
-export default SignIn;
+    </div>
+);
+
+export default App;
